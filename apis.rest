@@ -1,0 +1,60 @@
+# @name GetRepos
+GET {{baseUrl}}/users/{{owner}}/repos
+Authorization: Bearer {{token}}
+Accept: application/vnd.github+json
+
+{{
+  exports.repoNames = GetRepos.map(repo => repo.name);
+  exports.rulesets = [];
+  exports.rules = [];
+}}
+
+###
+
+# @name RepoRulesets
+# @loop for repoName of repoNames
+GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rulesets
+Authorization: Bearer {{token}}
+Accept: application/vnd.github+json
+
+{{
+  if (response.parsedBody.length !== 0) {
+    rulesets.push(...response.parsedBody);
+  }
+}}
+
+###
+
+# @name RepoRules
+# @loop for repoName of repoNames
+GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rules/branches/main
+Authorization: Bearer {{token}}
+Accept: application/vnd.github+json
+
+{{
+  if (response.parsedBody.length !== 0) {
+    rules.push(...response.parsedBody);
+  }
+}}
+
+### Create ruleset in another repo
+POST https://api.github.com/repos/{{org}}/{{target_repo}}/rulesets
+Authorization: Bearer {{token}}
+Accept: application/vnd.github+json
+Content-Type: application/json
+
+{
+  "name": "Copied Ruleset",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": ["refs/heads/main"],
+      "exclude": []
+    }
+  },
+  "rules": [
+    { "type": "non_fast_forward" }
+  ]
+}

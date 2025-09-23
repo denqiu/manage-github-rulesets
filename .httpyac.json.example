@@ -1,0 +1,9 @@
+{
+   "environments": {
+         "dev": {
+            "baseUrl": "https://api.github.com",
+            "owner": "<owner>",
+            "token": "<token>"
+        }
+   }
+}
