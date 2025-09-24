@@ -5,11 +5,13 @@ Accept: application/vnd.github+json
 
 {{
   exports.repoNames = GetRepos.map(repo => repo.name);
-  exports.rulesets = [];
-  exports.rules = [];
 }}
 
 ###
+
+{{
+  exports.rulesets = [];
+}}
 
 # @name RepoRulesets
 # @loop for repoName of repoNames
@@ -25,36 +27,52 @@ Accept: application/vnd.github+json
 
 ###
 
+{{
+  exports.rules = [];
+}}
+
 # @name RepoRules
 # @loop for repoName of repoNames
-GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rules/branches/main
+GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rules/branches/{{defaultBranch}}
 Authorization: Bearer {{token}}
 Accept: application/vnd.github+json
 
 {{
   if (response.parsedBody.length !== 0) {
-    rules.push(...response.parsedBody);
+    rules.push(response.parsedBody);
   }
 }}
 
-### Create ruleset in another repo
-POST https://api.github.com/repos/{{org}}/{{target_repo}}/rulesets
+###
+
+# @name CreateRules
+POST {{baseUrl}}/repos/{{owner}}/{{targetRepo}}/rulesets
 Authorization: Bearer {{token}}
 Accept: application/vnd.github+json
 Content-Type: application/json
 
 {
-  "name": "Copied Ruleset",
+  "name": "Ruleset for Default Branch",
   "target": "branch",
   "enforcement": "active",
-  "bypass_actors": [],
-  "conditions": {
-    "ref_name": {
-      "include": ["refs/heads/main"],
-      "exclude": []
-    }
-  },
   "rules": [
-    { "type": "non_fast_forward" }
+    { "type": "deletion" },
+    { "type": "non_fast_forward" },
+    { "type": "creation" },
+    { 
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": false,
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false,
+        "allowed_merge_methods": [
+          "merge",
+          "squash",
+          "rebase"
+        ]
+      },
+    }
   ]
 }

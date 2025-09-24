@@ -3,7 +3,9 @@
          "dev": {
             "baseUrl": "https://api.github.com",
             "owner": "<owner>",
-            "token": "<token>"
+            "token": "<token>",
+            "defaultBranch": "main",
+            "targetRepo": "<targetRepo>"
         }
    }
 }
