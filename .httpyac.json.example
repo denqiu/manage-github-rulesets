@@ -1,11 +1,11 @@
 {
    "environments": {
          "dev": {
-            "baseUrl": "https://api.github.com",
-            "owner": "<owner>",
-            "token": "<token>",
-            "defaultBranch": "main",
-            "targetRepo": "<targetRepo>"
+            "BASE_URL": "https://api.github.com",
+            "OWNER": "<OWNER>",
+            "TOKEN": "<TOKEN>",
+            "DEFAULT_BRANCH": "main",
+            "TARGET_REPO": "<TARGET_REPO>"
         }
    }
 }

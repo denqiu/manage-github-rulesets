@@ -1,6 +1,6 @@
 # @name GetRepos
-GET {{baseUrl}}/users/{{owner}}/repos
-Authorization: Bearer {{token}}
+GET {{BASE_URL}}/users/{{OWNER}}/repos
+Authorization: Bearer {{TOKEN}}
 Accept: application/vnd.github+json
 
 {{
@@ -15,8 +15,8 @@ Accept: application/vnd.github+json
 
 # @name RepoRulesets
 # @loop for repoName of repoNames
-GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rulesets
-Authorization: Bearer {{token}}
+GET {{BASE_URL}}/repos/{{OWNER}}/{{repoName}}/rulesets
+Authorization: Bearer {{TOKEN}}
 Accept: application/vnd.github+json
 
 {{
@@ -33,8 +33,8 @@ Accept: application/vnd.github+json
 
 # @name RepoRules
 # @loop for repoName of repoNames
-GET {{baseUrl}}/repos/{{owner}}/{{repoName}}/rules/branches/{{defaultBranch}}
-Authorization: Bearer {{token}}
+GET {{BASE_URL}}/repos/{{OWNER}}/{{repoName}}/rules/branches/{{DEFAULT_BRANCH}}
+Authorization: Bearer {{TOKEN}}
 Accept: application/vnd.github+json
 
 {{
@@ -46,8 +46,8 @@ Accept: application/vnd.github+json
 ###
 
 # @name CreateRules
-POST {{baseUrl}}/repos/{{owner}}/{{targetRepo}}/rulesets
-Authorization: Bearer {{token}}
+POST {{BASE_URL}}/repos/{{OWNER}}/{{TARGET_REPO}}/rulesets
+Authorization: Bearer {{TOKEN}}
 Accept: application/vnd.github+json
 Content-Type: application/json
 
