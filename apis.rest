@@ -55,6 +55,13 @@ Content-Type: application/json
   "name": "Ruleset for Default Branch",
   "target": "branch",
   "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": ["~DEFAULT_BRANCH"],
+      "exclude": []
+    }
+  },
   "rules": [
     { "type": "deletion" },
     { "type": "non_fast_forward" },
@@ -72,7 +79,7 @@ Content-Type: application/json
           "squash",
           "rebase"
         ]
-      },
+      }
     }
   ]
 }
